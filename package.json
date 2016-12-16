@@ -1,0 +1,35 @@
+{
+  "name": "librarify",
+  "version": "1.0.0",
+  "description": "A place to store book information",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js --exec babel-node --presets es2015,stage-2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NorthernTwig/librarify.git"
+  },
+  "keywords": [
+    "book",
+    "library",
+    "store",
+    "sql",
+    "gui"
+  ],
+  "author": "Oscar Nordquist",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NorthernTwig/librarify/issues"
+  },
+  "homepage": "https://github.com/NorthernTwig/librarify#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-2": "^6.18.0"
+  }
+}
