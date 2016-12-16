@@ -1,7 +1,10 @@
 import express from 'express'
+import library from '../routes/library'
 
-const PORT = 8000
 const app = express()
+const PORT = 8000
+
+app.use('/', library)
 
 app.use('*', (req, res) => {
     return res.send('Not valid')
