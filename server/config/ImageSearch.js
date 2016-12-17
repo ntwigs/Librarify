@@ -1,21 +1,17 @@
 import ImagesClient from 'google-images'
+import SECRET from './secret/Google-Api'
 
 
 export default class ImageSearch {
   constructor() {
-    this.client = new ImagesClient('')
+    this.client = new ImagesClient(SECRET.CSE, SECRET.API)
   }
 
-  readAll() {
-    return new Promise((resolve, reject) => {
-      this.db.serialize(() => {
-        this.db.all('SELECT * FROM Books', (err, books) => {
-          if (err) {
-            reject(err)
-          }
-          resolve(books)
-        })
-      })
+  search(title, author) {
+    return new Promise((res, rej) => {
+      this.client.search(`${title} ${author}`)
+      .then(images => res(images[0]))
+      .catch(err => res(err))
     })
   }
 }

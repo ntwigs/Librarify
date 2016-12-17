@@ -1,11 +1,13 @@
 import express from 'express'
 import DAL from '../config/DAL'
+import ImageSearch from '../config/ImageSearch'
 
 const router = express.Router()
 
 router.get('/', (req, res) => {
   const dal = new DAL()
   let books
+
 
   dal.readAll()
   .then((e) => books = e)
@@ -17,12 +19,16 @@ router.get('/', (req, res) => {
 router.get('/create/:title/:author', (req, res) => {
   const title = req.params.title
   const author = req.params.author
-
+  const imageSearch = new ImageSearch()
   const dal = new DAL()
-  dal.createNewBook(title, author)
+
+  imageSearch.search(title, author)
+  .then((image) => dal.createNewBook(title, author, image))
   .then(() => dal.close())
   .then(() => res.send('success'))
   .catch((err) => res.send(err))
+
+
 })
 
 router.get('/delete/:id', (req, res) => {
