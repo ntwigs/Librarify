@@ -7,11 +7,11 @@ const PORT = 8000
 app.use('/', library)
 
 app.use('*', (req, res) => {
-    return res.send('Not valid')
+  return res.send('Not valid')
 })
 
 app.listen(PORT, () => {
-    console.log('Express up. ' + PORT)
+  console.log('Express up. ' + PORT)
 })
 
 export default app
