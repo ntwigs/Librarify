@@ -14,4 +14,15 @@ router.get('/', (req, res) => {
 
 })
 
+router.get('/create/:title/:author', (req, res) => {
+  const title = req.params.title
+  const author = req.params.author
+
+  const dal = new DAL()
+  dal.createNewBook(title, author)
+  .then(() => dal.close())
+  .then(() => res.send('success'))
+  .catch(() => res.send('An error occured'))
+})
+
 export default router

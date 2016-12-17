@@ -21,6 +21,19 @@ export default class SQL {
     })
   }
 
+  createNewBook(title, author) {
+    return new Promise((resolve, reject) => {
+        this.db.serialize(() => {
+          this.db.run('INSERT INTO Books (book_name, book_author) VALUES (?, ?)', title, author, (err, res) => {
+            if (err) {
+              reject(err)
+            }
+            resolve(res)
+          })
+        })
+    })
+  }
+
   close() {
     this.db.close()
   }
