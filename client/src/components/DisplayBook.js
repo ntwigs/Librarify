@@ -29,8 +29,9 @@ export default class DisplayBook extends Component {
     }
     return cubeRotation
   }
-
+  
   render() {
+    this.test()
     return (
       <div onMouseMove={this.move} className="cube-container">
         <div className="cube" style={this.getPosition()}>
