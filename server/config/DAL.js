@@ -1,7 +1,5 @@
 import sqlite3 from 'sqlite3'
 
-// TODO: Get all, delete one, create one, edit one
-
 export default class SQL {
   constructor() {
     this.sql = sqlite3.verbose()
