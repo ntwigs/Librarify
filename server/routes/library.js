@@ -35,10 +35,10 @@ router.get('/delete/:id', (req, res) => {
   .catch((err) => res.send(err))
 })
 
-router.get('/:bookId', (req, res) => {
+router.get('/:id', (req, res) => {
   const bookId = req.params.id
   let book
-
+  
   const dal = new DAL()
   dal.getOneBook(bookId)
   .then((b) => book = b)
