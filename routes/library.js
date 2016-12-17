@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
   .then((e) => books = e)
   .then(() => dal.close())
   .then(() => res.send(books))
+  .catch((err) => res.send('An error occured', err))
 
 })
 
@@ -22,7 +23,7 @@ router.get('/create/:title/:author', (req, res) => {
   dal.createNewBook(title, author)
   .then(() => dal.close())
   .then(() => res.send('success'))
-  .catch(() => res.send('An error occured'))
+  .catch((e) => res.send('An error occured', err))
 })
 
 export default router

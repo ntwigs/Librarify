@@ -9,13 +9,13 @@ export default class SQL {
   }
 
   readAll() {
-    return new Promise((res, rej) => {
+    return new Promise((resolve, reject) => {
       this.db.serialize(() => {
         this.db.all('SELECT * FROM Books', (err, books) => {
           if (err) {
-            console.log(err)
+            reject(err)
           }
-          res(books)
+          resolve(books)
         })
       })
     })
