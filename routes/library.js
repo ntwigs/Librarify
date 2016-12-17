@@ -26,4 +26,14 @@ router.get('/create/:title/:author', (req, res) => {
   .catch((e) => res.send('An error occured', err))
 })
 
+router.get('/delete/:id', (req, res) => {
+  const bookId = req.params.id
+
+  const dal = new DAL()
+  dal.deleteBook(bookId)
+  .then(() => dal.close())
+  .then(() => res.send('success'))
+  .catch((e) => res.send('An error occured', err))
+})
+
 export default router
