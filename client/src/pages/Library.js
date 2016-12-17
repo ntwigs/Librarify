@@ -26,7 +26,13 @@ export default class Library extends Component {
   displayAllBooks() {
     let bookArray = []
     for (let i = 0; i < this.state.books.length; i++) {
-      bookArray.push(<Book key={i} cover={this.state.books[i].book_cover} />)
+      bookArray.push(
+        <Book key={i} 
+              cover={this.state.books[i].book_cover}
+              title={this.state.books[i].book_name}
+              author={this.state.books[i].book_author}
+        />
+      )
     }
     return bookArray
   }
@@ -34,7 +40,7 @@ export default class Library extends Component {
 
   render() {
     return (
-      <div>
+      <div className='wrapper'>
         {this.displayAllBooks()}
       </div>
     )

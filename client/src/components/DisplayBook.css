@@ -1,15 +1,95 @@
 * {
   margin: 0;
   padding: 0;
-  transition: all 250ms;
+  font-family: sans-serif;
+  font-size: 1em;
 }
 
 .wrapper {
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.85);
+}
+
+.container {
   display: flex;
-  justify-content: center;
+  align-self: center;
+  flex-direction: column;
+  width: 200px;
+  height: 400px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+  overflow: hidden;
+  float:left;
+  margin: 25px;
+  box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.3);
+}
+
+.header-image {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: gold;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background-color: white;
+}
+
+.section {
+  padding: 10px 0 10px 0;
+  background-color: white;
+}
+
+.section h5 {
+  font-size: 10px;
+  color: #757575;
+}
+
+.section h1 {
+  color: rgba(0, 0, 0, 0.85);
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+.seperator {
+  align-self: center;
+  width: 85%;
+  height: 5%;
+  background-color: #c7c7c7;
+}
+
+.title {
+  height: 100%;
+  width: 100%;
+}
+
+.author {
+  width: 100%;
+  height: 100%;
+}
+
+.year {
+  width: 100%;
+  height: 100%;
+}
+
+.footer {
+  width: 100%;
+  height: 30%;
+  background-color: white;
 }
 
 .cube-container {
@@ -20,16 +100,17 @@
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   perspective: 1000px;
-  float: left;
 }
 
 .cube {
   width: 100%;
   height: 100%;
   position: absolute;
-  transform: translateZ(-1000px) rotateY(0deg) rotateX(0deg);
+  transform: translateZ(-1000px) rotateY(27deg) rotateX(13deg);
   transform-style: preserve-3d;
   left: 10%;
+  pointer-events: none;
+  transition: transform 250ms ease-out;
 }
 
 .cube div {
@@ -42,7 +123,10 @@
 
 .front {
   transform: rotateY(0deg) translateZ(34px);
-  background-image: url('https://s-media-cache-ak0.pinimg.com/originals/85/43/52/854352b94c877ee270e76909403ddcd2.jpg');
+  background: linear-gradient(
+      rgba(47, 23, 23, 0.45), 
+      rgba(47, 23, 23, 0.45)
+    );
   background-size: cover;
   background-position: center center;
 }
@@ -86,15 +170,4 @@
     ), url('http://orig00.deviantart.net/ef42/f/2012/350/d/1/texture_book_paper_side_by_nihil_xiii-d5o6s6x.jpg');
   background-size: cover;
   background-position: center center;
-}
-
-.origo {
-  width: 10px;
-  height: 10px;
-  background-color: green;
-  margin: 0 auto;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  border-radius: 100%;
 }

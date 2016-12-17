@@ -5,8 +5,8 @@ export default class DisplayBook extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      x: 0,
-      y: 0
+      x: -13,
+      y: 27
     }
   }
 
