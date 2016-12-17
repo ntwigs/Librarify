@@ -60,6 +60,19 @@ export default class SQL {
     })
   }
 
+  updateBook(id, title, author) {
+    return new Promise((resolve, reject) => {
+      this.db.serialize(() => {
+        this.db.run('UPDATE Books SET book_author = (?), book_name = (?) WHERE book_id = (?) ', author, title, id, (err, res) => {
+          if (err) {
+            reject(err)
+          }
+          resolve(res)
+        })
+      })
+    })
+  }
+
   close() {
     this.db.close()
   }

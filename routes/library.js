@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
   .then((e) => books = e)
   .then(() => dal.close())
   .then(() => res.send(books))
-  .catch((err) => res.send('An error occured', err))
+  .catch((err) => res.send(err))
 })
 
 router.get('/create/:title/:author', (req, res) => {
@@ -22,7 +22,7 @@ router.get('/create/:title/:author', (req, res) => {
   dal.createNewBook(title, author)
   .then(() => dal.close())
   .then(() => res.send('success'))
-  .catch((e) => res.send('An error occured', err))
+  .catch((err) => res.send(err))
 })
 
 router.get('/delete/:id', (req, res) => {
@@ -32,7 +32,7 @@ router.get('/delete/:id', (req, res) => {
   dal.deleteBook(bookId)
   .then(() => dal.close())
   .then(() => res.send('success'))
-  .catch((e) => res.send('An error occured', err))
+  .catch((err) => res.send(err))
 })
 
 router.get('/:bookId', (req, res) => {
@@ -44,8 +44,19 @@ router.get('/:bookId', (req, res) => {
   .then((b) => book = b)
   .then(() => dal.close())
   .then(() => res.send(book))
-  .catch((e) => res.send('An error occured', err))
+  .catch((err) => res.send(err))
 })
 
+router.get('/update/:id/:title/:author', (req, res) => {
+  const bookId = req.params.id
+  const title = req.params.title
+  const author = req.params.author
+
+  const dal = new DAL()
+  dal.updateBook(bookId, title, author)
+  .then(() => dal.close())
+  .then(() => res.send('Success'))
+  .catch((err) => res.send(err))
+})
 
 export default router
