@@ -30,7 +30,7 @@ export default class Library extends Component {
         <Book key={i} 
               cover={this.state.books[i].book_cover}
               title={this.state.books[i].book_name}
-              author={this.state.books[i].book_author}
+              author={this.state.books[i].author_name}
         />
       )
     }

@@ -8,7 +8,6 @@ router.get('/', (req, res) => {
   const dal = new DAL()
   let books
 
-
   dal.readAll()
   .then((e) => books = e)
   .then(() => dal.close())
@@ -27,8 +26,6 @@ router.get('/create/:title/:author', (req, res) => {
   .then(() => dal.close())
   .then(() => res.send('success'))
   .catch((err) => res.send(err))
-
-
 })
 
 router.get('/delete/:id', (req, res) => {

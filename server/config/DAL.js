@@ -1,6 +1,6 @@
 import sqlite3 from 'sqlite3'
 
-export default class SQL {
+export default class DAL {
   constructor() {
     this.sql = sqlite3.verbose()
     this.db = new this.sql.Database('config/secret/Library')
@@ -9,7 +9,7 @@ export default class SQL {
   readAll() {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        this.db.all('SELECT * FROM Books', (err, books) => {
+        this.db.all('SELECT author_name, book_name, book_cover FROM Books INNER JOIN Authors ON Books.book_author=Authors.author_id', (err, books) => {
           if (err) {
             reject(err)
           }
@@ -22,15 +22,65 @@ export default class SQL {
   createNewBook(title, author, image) {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        this.db.run('INSERT INTO Books (book_name, book_author, book_cover) VALUES (?, ?, ?)', title, author, image.url, (err, res) => {
-          if (err) {
-            reject(err)
-          }
-          resolve(res)
-        })
+        this.checkAuthor(author)
+          .then((auth) => this.getAuthorId(auth))
+          .then((authorId) => this.insertBook(title, authorId, image))
+          .then(() => resolve())
+          .catch((err) => reject(err))
       })
     })
   }
+
+  checkAuthor(author) {
+    return new Promise((resolve, reject) => {
+      this.db.get('SELECT * FROM Authors WHERE author_name = (?)', author, (err, res) => {
+        if (err) {
+          reject(err)
+        }
+
+        if (res === undefined) {
+          return this.createAuthor(author)
+          .then((l) => resolve(author))
+        }
+
+        resolve(author)
+      })
+    })
+  }
+
+  getAuthorId(author) {
+    return new Promise((resolve, reject) => {
+      this.db.get('SELECT author_id FROM Authors WHERE author_name = (?)', author, (err, res) => {
+        if (err) {
+          reject(err)
+        }
+        
+        resolve(res)
+      })
+    })
+  }
+
+  createAuthor(author) {
+    return new Promise((resolve, reject) => {
+      this.db.run('INSERT INTO Authors (author_name) VALUES (?)', author, (err, res) => {
+        if (err) {
+          reject(err)
+        }
+        resolve(res)
+      })
+    }) 
+  }
+
+  insertBook(title, authorId, image) {
+    return new Promise((resolve, reject) => {
+      this.db.run('INSERT INTO Books (book_name, book_author, book_cover) VALUES (?, ?, ?)', title, authorId.author_id, image.url, (err, res) => {
+        if (err) {
+          reject(err)
+        }
+        resolve(res)
+      })
+    })
+  } 
 
   deleteBook(id) {
     return new Promise((resolve, reject) => {
