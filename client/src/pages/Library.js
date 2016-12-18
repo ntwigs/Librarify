@@ -9,7 +9,7 @@ export default class Library extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.getAllBooks()
   }
 
@@ -32,10 +32,18 @@ export default class Library extends Component {
               title={this.state.books[i].book_name}
               author={this.state.books[i].author_name}
               id={this.state.books[i].book_id}
+              remove={this.removeBookFromArray}
         />
       )
     }
     return bookArray
+  }
+
+  removeBookFromArray = (id) => {
+    const filtered = this.state.books.filter((component) => component.book_id !== id)
+    this.setState({
+      books: filtered
+    })
   }
 
 

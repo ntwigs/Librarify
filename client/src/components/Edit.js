@@ -14,7 +14,7 @@ export default class Edit extends Component {
   }
 
   getEdit() {
-    return this.state.options ? <div className='delete edit'>e</div> : null
+    return this.state.options ? <div className='delete edit' onClick={this.props.edit}>e</div> : null
   }
 
   getDelete() {
@@ -23,7 +23,11 @@ export default class Edit extends Component {
 
   delete = () => {
     fetch('http://localhost:8000/delete/' + this.props.id)
-    .then(r => console.log(r))
+    .then(r => this.deleteFromClient())
+  }
+
+  deleteFromClient() {
+    this.props.remove(this.props.id)
   }
 
   render() {
