@@ -56,7 +56,8 @@ router.get('/update/:id/:title/:author', (req, res) => {
   const author = req.params.author
 
   const dal = new DAL()
-  dal.getAuthorId(req.params.author)
+  dal.checkAuthor(req.params.author)
+  .then(() => dal.getAuthorId(req.params.author))
   .then((authorId) => dal.updateBook(bookId, title, authorId.author_id))
   .then(() => dal.close())
   .then(() => res.send('Success'))
