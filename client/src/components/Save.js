@@ -6,8 +6,14 @@ export default class Save extends Component {
   }
 
   save = () => {
-    this.props.save()
-    this.props.edit()
+    const changes = this.props.changes()
+
+    fetch(`http://localhost:8000/update/${this.props.id}/${changes.title}/${changes.author}`)
+    .then(() => {
+      this.props.save()
+      this.props.edit()
+    })
+    .catch((e) => console.log(e))
   }
 
   render() {

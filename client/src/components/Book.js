@@ -30,10 +30,15 @@ export default class Book extends Component {
     this.setState({newAuthor: author})
   }
 
-  saveChanges = () => {
+  getChanges = () => {
     const newTitle = this.state.newTitle !== '' ? this.state.newTitle : this.state.title 
     const newAuthor = this.state.newAuthor !== '' ? this.state.newAuthor : this.state.author
-    this.setState({title: newTitle, author: newAuthor})
+    return {title: newTitle, author: newAuthor}
+  }
+
+  saveChanges = () => {
+    const changes = this.getChanges()
+    this.setState({title: changes.title, author: changes.author})
   }
 
   render() {
@@ -61,7 +66,7 @@ export default class Book extends Component {
             </div>
           </div>
           <div className="footer">
-            <Save display={this.state.edit} edit={this.enableEdit} save={this.saveChanges} id={this.props.id}/>
+            <Save display={this.state.edit} edit={this.enableEdit} save={this.saveChanges} id={this.props.id} changes={this.getChanges}/>
           </div>
         </div>
       </div>
