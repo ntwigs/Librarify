@@ -37,12 +37,10 @@ export default class DAL {
         if (err) {
           reject(err)
         }
-
         if (res === undefined) {
           return this.createAuthor(author)
           .then((l) => resolve(author))
         }
-
         resolve(author)
       })
     })
@@ -54,7 +52,6 @@ export default class DAL {
         if (err) {
           reject(err)
         }
-        
         resolve(res)
       })
     })
@@ -98,7 +95,7 @@ export default class DAL {
   getOneBook(id) {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        this.db.get('SELECT * FROM Books WHERE book_id = (?)', id, (err, res) => {
+        this.db.get('SELECT * FROM Books INNER JOIN Authors ON Books.book_author=Authors.author_id WHERE book_id = (?)', id, (err, res) => {
           if (err) {
             reject(err)
           }
