@@ -26,7 +26,6 @@
   float:left;
   margin: 25px;
   box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.3);
-  
 }
 
 .header-image {
@@ -174,4 +173,13 @@
     ), url('http://orig00.deviantart.net/ef42/f/2012/350/d/1/texture_book_paper_side_by_nihil_xiii-d5o6s6x.jpg');
   background-size: cover;
   background-position: center center;
+}
+
+.edit {
+    float: right;
+    right: 6px;
+    top: 3px;
+    cursor: pointer;
+    position: relative;
+    z-index: 5;
 }

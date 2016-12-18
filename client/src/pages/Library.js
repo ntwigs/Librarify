@@ -31,6 +31,7 @@ export default class Library extends Component {
               cover={this.state.books[i].book_cover}
               title={this.state.books[i].book_name}
               author={this.state.books[i].author_name}
+              id={this.state.books[i].book_id}
         />
       )
     }

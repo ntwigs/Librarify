@@ -9,7 +9,7 @@ export default class DAL {
   readAll() {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        this.db.all('SELECT author_name, book_name, book_cover FROM Books INNER JOIN Authors ON Books.book_author=Authors.author_id', (err, books) => {
+        this.db.all('SELECT author_name, book_name, book_cover, book_id FROM Books INNER JOIN Authors ON Books.book_author=Authors.author_id', (err, books) => {
           if (err) {
             reject(err)
           }
