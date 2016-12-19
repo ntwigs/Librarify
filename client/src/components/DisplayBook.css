@@ -5,10 +5,13 @@
   font-size: 1em;
 }
 
+body {
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
 .wrapper {
   width: 100%;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.85);
   justify-content: center;
   display: flex;
   flex-flow: row wrap;
@@ -54,6 +57,8 @@
 .section {
   padding: 10px 0 10px 0;
   background-color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 .section h5 {
@@ -68,10 +73,10 @@
 }
 
 .seperator {
-  align-self: center;
   width: 85%;
-  height: 5%;
-  background-color: #c7c7c7;
+  height: 2px;
+  background-color: darkturquoise;
+  margin:5px;
 }
 
 .title {
@@ -93,6 +98,25 @@
   width: 100%;
   height: 30%;
   background-color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.save {
+  padding: 5px 15px;
+  text-align: center;
+  background-color: rgba(33, 150, 243, 1);
+  color: white;
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex;
+  align-self: center;
+  cursor: pointer;
+  transition: all 250ms;
+}
+
+.save:hover {
+  background-color: rgba(33, 150, 243, 0.8)
 }
 
 .cube-container {
@@ -210,4 +234,32 @@
 
 .display:hover {
   opacity: 1;
+}
+
+.settings {
+  transition: all 250ms;
+  opacity: 0.6;
+}
+
+.settings:hover {
+  opacity: 1;
+}
+
+.editable-text {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: bold;
+    margin-top: 2px;
+    border: none;
+    padding: 2px;
+    align-self: center;
+    max-width: 85%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    outline: none;
+}
+
+.section {
+  margin-bottom: 0px;
 }

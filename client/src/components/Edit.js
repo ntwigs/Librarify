@@ -20,10 +20,6 @@ export default class Edit extends Component {
     return this.state.options ? 'display' : null
   }
 
-  // getDelete() {
-  //   return this.state.options ?  : null
-  // }
-
   delete = () => {
     fetch('http://localhost:8000/delete/' + this.props.id)
     .then(r => this.deleteFromClient())
@@ -59,7 +55,7 @@ export default class Edit extends Component {
   render() {
     return (
       <div className='options-container'>
-        <div className={'edit ' + this.getSpin()} onClick={this.showOptions} style={this.getSettingsStyle()}></div>
+        <div className={'edit settings ' + this.getSpin()} onClick={this.showOptions} style={this.getSettingsStyle()}></div>
         <div className={'delete edit ' + this.getEdit() } onClick={this.props.edit} style={this.getEditStyle()}></div>
         <div className={'delete edit ' + this.getEdit() } onClick={this.delete} style={this.getClearStyle()}></div>
       </div>

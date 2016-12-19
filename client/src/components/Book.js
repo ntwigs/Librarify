@@ -54,12 +54,10 @@ export default class Book extends Component {
               <h5 className="cat-title">TITLE</h5>
               <TextDisplay text={this.state.title} editable={this.state.edit} store={this.setNewTitle} />
             </div>
-            <div className="seperator"></div>
             <div className="author section">
               <h5 className="cat-author">AUTHOR</h5>
               <TextDisplay text={this.state.author} editable={this.state.edit} store={this.setNewAuthor}/>
             </div>
-            <div className="seperator"></div>
             <div className="year section">
               <h5 className="cat-year">YEAR</h5>
               <TextDisplay text={'1866'} />
