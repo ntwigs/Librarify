@@ -177,9 +177,37 @@
 
 .edit {
     float: right;
-    right: 6px;
+    right: 3px;
     top: 3px;
     cursor: pointer;
     position: relative;
     z-index: 5;
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    background-position: center center;
+    transition: transform 500ms;
+    transform: rotateZ(0deg);
+}
+
+.spin {
+  transform: rotate(180deg);
+}
+
+.delete {
+  opacity: 0;
+  left: 20px;
+  z-index: -1;
+  margin-right: 5px;
+  transition: all 250ms;
+}
+
+.display {
+  opacity: 0.6;
+  left: -3px;
+  z-index: 1;
+}
+
+.display:hover {
+  opacity: 1;
 }

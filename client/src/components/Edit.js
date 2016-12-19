@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import cog from './BookIcons/cog.svg'
+import edit from './BookIcons/edit.svg'
+import clear from './BookIcons/clear.svg'
 
 export default class Edit extends Component {
   constructor() {
@@ -14,12 +17,12 @@ export default class Edit extends Component {
   }
 
   getEdit() {
-    return this.state.options ? <div className='delete edit' onClick={this.props.edit}>e</div> : null
+    return this.state.options ? 'display' : null
   }
 
-  getDelete() {
-    return this.state.options ? <div className='delete edit' onClick={this.delete}>d</div> : null
-  }
+  // getDelete() {
+  //   return this.state.options ?  : null
+  // }
 
   delete = () => {
     fetch('http://localhost:8000/delete/' + this.props.id)
@@ -30,12 +33,35 @@ export default class Edit extends Component {
     this.props.remove(this.props.id)
   }
 
+  getSpin = () => {
+    return this.state.options ? 'spin' : null
+  }
+
+  getSettingsStyle = () => {
+    return {
+      backgroundImage: `url(${cog})`
+    }
+  }
+
+  getEditStyle = () => {
+    return {
+      backgroundImage: `url(${edit})`
+    }
+  }
+
+  getClearStyle = () => {
+    return {
+      backgroundImage: `url(${clear})`
+    }
+  }
+
+
   render() {
     return (
       <div className='options-container'>
-        <div className='edit' onClick={this.showOptions}>+</div>
-        {this.getDelete()}
-        {this.getEdit()}
+        <div className={'edit ' + this.getSpin()} onClick={this.showOptions} style={this.getSettingsStyle()}></div>
+        <div className={'delete edit ' + this.getEdit() } onClick={this.props.edit} style={this.getEditStyle()}></div>
+        <div className={'delete edit ' + this.getEdit() } onClick={this.delete} style={this.getClearStyle()}></div>
       </div>
     )
   }
