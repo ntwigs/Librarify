@@ -14,7 +14,14 @@ body {
   height: 100vh;
   justify-content: center;
   display: flex;
-  flex-flow: row wrap;
+  flex-direction: column;
+}
+
+.book-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .container {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Book from '../components/Book'
+import Header from '../components/Header'
 
 export default class Library extends Component {
   constructor() {
@@ -50,7 +51,10 @@ export default class Library extends Component {
   render() {
     return (
       <div className='wrapper'>
-        {this.displayAllBooks()}
+        <Header />
+        <div className='book-wrapper'>
+          {this.displayAllBooks()}
+        </div>
       </div>
     )
   }
