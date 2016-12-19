@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
+import add from './BookIcons/clear.svg'
 import './Header.css'
 
 export default class Header extends Component {
+  getAddIcon = () => {
+    return {
+      backgroundImage: `url(${add})`
+    }
+  }
+
   render() {
     return (
       <div className='header'>
@@ -10,7 +17,7 @@ export default class Header extends Component {
         </div>
         <div className='action-field'>
           <div className='search-book'></div> 
-          <div className='add-book'></div> 
+          <div className='add-book' style={this.getAddIcon()}></div> 
         </div>
       </div>
     )
