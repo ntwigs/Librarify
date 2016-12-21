@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import addIcon from './BookIcons/clear.svg'
 import Add from './Add'
+import Search from './Search'
 import './Header.css'
 
 export default class Header extends Component {
@@ -28,7 +29,7 @@ export default class Header extends Component {
           <h1 className='header-text'>Librarify</h1>
         </div>
         <div className='action-field'>
-          <div className='search-book'></div>
+          <Search />
           <Add toggle={this.toggleTemplate} />
         </div>
       </div>

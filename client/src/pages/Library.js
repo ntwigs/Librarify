@@ -71,8 +71,6 @@ export default class Library extends Component {
       book_name: title
     }
 
-    console.log(this.state.books)
-
     this.setState({
       books: [...this.state.books, book]
     })

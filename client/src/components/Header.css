@@ -34,8 +34,16 @@
   align-self: center;
   width: 25px;
   height: 25px;
+  background-size: cover;
+  background-position: center center;
   margin-right: 20px;
-  background-color: turquoise;
+  opacity: 0.6;
+  transition: all 250ms;
+  cursor: pointer;
+}
+
+.search-book:hover {
+  opacity: 1;
 }
 
 .text-field {

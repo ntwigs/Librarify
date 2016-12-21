@@ -66,12 +66,12 @@ export default class DAL {
         }
         resolve(res)
       })
-    }) 
+    })
   }
 
   insertBook(title, authorId, image) {
     return new Promise((resolve, reject) => {
-      this.db.run('INSERT INTO Books (book_name, book_author, book_cover) VALUES (?, ?, ?)', title, authorId.author_id, image.url, (err, res) => {
+      this.db.run('INSERT INTO Books (book_name, book_author, book_cover) VALUES (?, ?, ?)', title, authorId.author_id, image.thumbnail.url, (err, res) => {
         if (err) {
           reject(err)
         }
