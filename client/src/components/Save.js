@@ -13,13 +13,15 @@ export default class Save extends Component {
     }
 
     this.saveNew(changes)
-    
   }
 
   saveNew(changes) {
     fetch(`http://localhost:8000/create/${changes.title}/${changes.author}`)
         .then(res => res.json())
-        .then(json => this.props.idChange(json.book_id))
+        .then(json => {
+          this.props.idChange(json.book_id)
+          this.props.changeCover(json.book_cover)
+        })
         .then(() => this.props.save())
         .then(() => this.props.edit())
         .catch((e) => console.log(e))

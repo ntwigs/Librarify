@@ -4,10 +4,11 @@ import edit from './BookIcons/edit.svg'
 import clear from './BookIcons/clear.svg'
 
 export default class Edit extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      options: false
+      options: false,
+      id: this.props.id
     }
   }
 
@@ -21,6 +22,7 @@ export default class Edit extends Component {
   }
 
   delete = () => {
+    console.log(this.props.id)
     fetch('http://localhost:8000/delete/' + this.props.id)
     .then(r => this.props.remove(this.props.id))
   }

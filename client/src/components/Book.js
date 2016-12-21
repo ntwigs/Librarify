@@ -11,9 +11,11 @@ export default class Book extends Component {
     this.state = {
       title: this.props.title,
       author: this.props.author,
+      cover: this.props.cover,
       newTitle: '',
       newAuthor: '',
-      edit: this.props.new
+      edit: this.props.new,
+      id: this.props.id
     }
   }
 
@@ -45,12 +47,16 @@ export default class Book extends Component {
     this.setState({id: id})
   }
 
+  changeCover = (coverLink) => {
+    this.setState({cover: coverLink})
+  }
+
   render() {
     return (
-      <div className="container" data-id={this.props.id} data-oldId={this.props.id}>
+      <div className="container" data-id={this.state.id} data-oldId={this.state.id}>
         <div className="header-image">
-          <Edit id={this.props.id} remove={this.props.remove} edit={this.enableEdit}/>
-          <DisplayBook cover={this.props.cover}/>
+          <Edit id={this.state.id} remove={this.props.remove} edit={this.enableEdit}/>
+          <DisplayBook cover={this.state.cover}/>
         </div>
         <div className="body">
           <div className="info">
@@ -68,7 +74,7 @@ export default class Book extends Component {
             </div>
           </div>
           <div className="footer">
-            <Save display={this.state.edit} edit={this.enableEdit} save={this.saveChanges} id={this.props.id} changes={this.getChanges} idChange={this.changeId} />
+            <Save display={this.state.edit} edit={this.enableEdit} save={this.saveChanges} id={this.state.id} changes={this.getChanges} idChange={this.changeId} changeCover={this.changeCover}/>
           </div>
         </div>
       </div>
