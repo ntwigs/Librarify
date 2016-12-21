@@ -24,6 +24,7 @@ export default class Save extends Component {
         })
         .then(() => this.props.save())
         .then(() => this.props.edit())
+        .then(() => this.props.addBook())
         .catch((e) => console.log(e))
   }
 

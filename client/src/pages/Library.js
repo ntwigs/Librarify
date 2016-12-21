@@ -63,8 +63,26 @@ export default class Library extends Component {
     this.setState({displayTemplate: toggle})
   }
 
+  addToBooksArray = (title, author, cover, id) => {
+    const book = {
+      author_name: author,
+      book_cover: cover,
+      book_id: id,
+      book_name: title
+    }
+
+    console.log(this.state.books)
+
+    this.setState({
+      books: [...this.state.books, book]
+    })
+
+    this.toggleTemplate()
+
+  }
+
   getBookTemplate() {
-    return this.state.displayTemplate ? <BookTemplate remove={this.removeBookFromArray} /> : null
+    return this.state.displayTemplate ? <BookTemplate remove={this.removeBookFromArray} addBook={this.addToBooksArray}/> : null
   }
 
   render() {

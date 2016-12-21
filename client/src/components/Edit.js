@@ -22,7 +22,6 @@ export default class Edit extends Component {
   }
 
   delete = () => {
-    console.log(this.props.id)
     fetch('http://localhost:8000/delete/' + this.props.id)
     .then(r => this.props.remove(this.props.id))
   }

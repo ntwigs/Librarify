@@ -51,6 +51,15 @@ export default class Book extends Component {
     this.setState({cover: coverLink})
   }
 
+  bookingsYes = () => {
+    const title = this.state.title
+    const author = this.state.author
+    const cover = this.state.cover
+    const id = this.state.id
+
+    this.props.addBook(title, author, cover, id)
+  }
+
   render() {
     return (
       <div className="container" data-id={this.state.id} data-oldId={this.state.id}>
@@ -74,7 +83,7 @@ export default class Book extends Component {
             </div>
           </div>
           <div className="footer">
-            <Save display={this.state.edit} edit={this.enableEdit} save={this.saveChanges} id={this.state.id} changes={this.getChanges} idChange={this.changeId} changeCover={this.changeCover}/>
+  <Save display={this.state.edit} edit={this.enableEdit} save={this.saveChanges} id={this.state.id} changes={this.getChanges} idChange={this.changeId} changeCover={this.changeCover} addBook={this.bookingsYes}/>
           </div>
         </div>
       </div>
