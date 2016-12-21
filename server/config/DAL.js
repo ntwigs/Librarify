@@ -25,7 +25,8 @@ export default class DAL {
         this.checkAuthor(author)
           .then((auth) => this.getAuthorId(auth))
           .then((authorId) => this.insertBook(title, authorId, image))
-          .then(() => resolve())
+          .then(() => this.getBookOnCreation(title, author, image))
+          .then((res) => resolve(res))
           .catch((err) => reject(err))
       })
     })
@@ -74,10 +75,21 @@ export default class DAL {
         if (err) {
           reject(err)
         }
+        resolve(authorId.author_id)
+      })
+    })
+  }
+
+  getBookOnCreation(title, author) {
+    return new Promise((resolve, reject) => {
+      this.db.get('SELECT * FROM Books INNER JOIN AUthors ON Books.book_author=Authors.author_id WHERE book_name = (?) AND author_name = (?)', title, author, (err, res) => {
+        if (err) {
+          reject(err)
+        }
         resolve(res)
       })
     })
-  } 
+  }
 
   deleteBook(id) {
     return new Promise((resolve, reject) => {

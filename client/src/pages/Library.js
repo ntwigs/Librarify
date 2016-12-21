@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import BookTemplate from './../components/BookTemplate'
 import Book from '../components/Book'
 import Header from '../components/Header'
 
@@ -6,7 +7,8 @@ export default class Library extends Component {
   constructor() {
     super()
     this.state = {
-      books: []
+      books: [],
+      displayTemplate: false
     }
   }
 
@@ -24,35 +26,53 @@ export default class Library extends Component {
     })
   }
 
-  displayAllBooks() {
+  createBook(index) {
+    let book = this.state.books[index]
+
+    return <Book key={book.book_id}
+                 cover={book.book_cover}
+                 title={book.book_name} 
+                 author={book.author_name} 
+                 id={book.book_id} 
+                 remove={this.removeBookFromArray}
+                 new={false} 
+    />
+  }
+
+  displayAllBooks = () => {
     let bookArray = []
+
     for (let i = 0; i < this.state.books.length; i++) {
       bookArray.push(
-        <Book key={i} 
-              cover={this.state.books[i].book_cover}
-              title={this.state.books[i].book_name}
-              author={this.state.books[i].author_name}
-              id={this.state.books[i].book_id}
-              remove={this.removeBookFromArray}
-        />
+        this.createBook(i)
       )
     }
-    return bookArray
+    return bookArray.reverse()
   }
 
   removeBookFromArray = (id) => {
     const filtered = this.state.books.filter((component) => component.book_id !== id)
+    
     this.setState({
       books: filtered
     })
   }
 
+  toggleTemplate = () => {
+    const toggle = this.state.displayTemplate ? false : true
+    this.setState({displayTemplate: toggle})
+  }
+
+  getBookTemplate() {
+    return this.state.displayTemplate ? <BookTemplate remove={this.removeBookFromArray} /> : null
+  }
 
   render() {
     return (
       <div className='wrapper'>
-        <Header />
+        <Header toggleTemplate={this.toggleTemplate} />
         <div className='book-wrapper'>
+          {this.getBookTemplate()}
           {this.displayAllBooks()}
         </div>
       </div>

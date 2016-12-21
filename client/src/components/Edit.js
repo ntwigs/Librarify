@@ -22,11 +22,7 @@ export default class Edit extends Component {
 
   delete = () => {
     fetch('http://localhost:8000/delete/' + this.props.id)
-    .then(r => this.deleteFromClient())
-  }
-
-  deleteFromClient() {
-    this.props.remove(this.props.id)
+    .then(r => this.props.remove(this.props.id))
   }
 
   getSpin = () => {

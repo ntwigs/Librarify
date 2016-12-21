@@ -1,11 +1,23 @@
 import React, { Component } from 'react'
-import add from './BookIcons/clear.svg'
+import addIcon from './BookIcons/clear.svg'
+import Add from './Add'
 import './Header.css'
 
 export default class Header extends Component {
+  constructor() {
+    super()
+    this.state = {
+      displayTemplate: false
+    }
+  }
+
+  toggleTemplate = () => {
+    this.props.toggleTemplate()
+  }
+
   getAddIcon = () => {
     return {
-      backgroundImage: `url(${add})`
+      backgroundImage: `url(${addIcon})`
     }
   }
 
@@ -16,8 +28,8 @@ export default class Header extends Component {
           <h1 className='header-text'>Librarify</h1>
         </div>
         <div className='action-field'>
-          <div className='search-book'></div> 
-          <div className='add-book' style={this.getAddIcon()}></div> 
+          <div className='search-book'></div>
+          <Add toggle={this.toggleTemplate} />
         </div>
       </div>
     )

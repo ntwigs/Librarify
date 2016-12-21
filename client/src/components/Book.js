@@ -13,7 +13,7 @@ export default class Book extends Component {
       author: this.props.author,
       newTitle: '',
       newAuthor: '',
-      edit: false
+      edit: this.props.new
     }
   }
 
@@ -41,9 +41,13 @@ export default class Book extends Component {
     this.setState({title: changes.title, author: changes.author})
   }
 
+  changeId = (id) => {
+    this.setState({id: id})
+  }
+
   render() {
     return (
-      <div className="container">
+      <div className="container" data-id={this.props.id} data-oldId={this.props.id}>
         <div className="header-image">
           <Edit id={this.props.id} remove={this.props.remove} edit={this.enableEdit}/>
           <DisplayBook cover={this.props.cover}/>
@@ -64,7 +68,7 @@ export default class Book extends Component {
             </div>
           </div>
           <div className="footer">
-            <Save display={this.state.edit} edit={this.enableEdit} save={this.saveChanges} id={this.props.id} changes={this.getChanges}/>
+            <Save display={this.state.edit} edit={this.enableEdit} save={this.saveChanges} id={this.props.id} changes={this.getChanges} idChange={this.changeId} />
           </div>
         </div>
       </div>

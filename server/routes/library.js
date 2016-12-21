@@ -20,11 +20,15 @@ router.get('/create/:title/:author', (req, res) => {
   const author = req.params.author
   const imageSearch = new ImageSearch()
   const dal = new DAL()
+  let createdBook
 
   imageSearch.search(title, author)
   .then((image) => dal.createNewBook(title, author, image))
-  .then(() => dal.close())
-  .then(() => res.send('success'))
+  .then((result) => {
+    createdBook = result
+    return dal.close()
+  })
+  .then(() => res.send(createdBook))
   .catch((err) => res.send(err))
 })
 
