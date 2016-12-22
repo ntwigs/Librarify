@@ -2,7 +2,6 @@ import express from 'express'
 import cors from 'cors'
 import library from '../routes/library'
 import http from 'http'
-import socket from 'socket.io'
 import socketHandler from '../routes/socketHandler'
 
 const app = express()
