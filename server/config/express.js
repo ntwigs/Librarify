@@ -7,6 +7,8 @@ import socketHandler from '../routes/socketHandler'
 const app = express()
 const server = http.createServer(app)
 const io = socketHandler(server)
+const ioInstance = new io()
+ioInstance.initialize()
 const PORT = 8000
 
 app.use(cors())
@@ -18,7 +20,7 @@ app.use('*', (req, res) => {
 })
 
 server.listen(PORT, () => {
-  console.log('Express ups. ' + PORT)
+  console.log('Express up. ' + PORT)
 })
 
 export default app

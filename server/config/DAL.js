@@ -130,6 +130,19 @@ export default class DAL {
     })
   }
 
+  bookSearch(text) {
+    return new Promise((resolve, reject) => {
+      this.db.serialize(() => {
+        this.db.all('SELECT book_id FROM Books WHERE book_name LIKE (?)', '%' + text + '%', (err, res) => {
+          if (err) {
+            reject(err)
+          }
+          resolve(res)
+        })
+      })
+    })
+  }
+
   close() {
     this.db.close()
   }

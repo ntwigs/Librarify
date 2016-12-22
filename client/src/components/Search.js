@@ -13,6 +13,12 @@ export default class Search extends Component {
     }
   }
 
+  componentDidMount() {
+    socket.on('result', (value) => {
+      console.log(value)
+    })
+  }
+
   getAddIcon = () => {
     return {
       backgroundImage: `url(${magnifier})`
@@ -21,6 +27,7 @@ export default class Search extends Component {
 
   inputToggle = () => {
     const toggle = this.state.input ? false : true
+    toggle ? socket.emit('openDB') : socket.emit('closeDB')
     this.setState({input: toggle})
   }
 
