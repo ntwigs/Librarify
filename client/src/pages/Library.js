@@ -8,6 +8,8 @@ export default class Library extends Component {
     super()
     this.state = {
       books: [],
+      searchBooks: [],
+      searchMode: false,
       displayTemplate: false
     }
   }
@@ -26,8 +28,8 @@ export default class Library extends Component {
     })
   }
 
-  createBook(index) {
-    let book = this.state.books[index]
+  createBook(index, search = false) {
+    let book = search ? this.state.searchBooks[index] : this.state.books[index]
 
     return <Book key={book.book_id}
                  cover={book.book_cover}
@@ -41,21 +43,27 @@ export default class Library extends Component {
 
   displayAllBooks = () => {
     let bookArray = []
+    const bookLength = this.state.searchMode ? this.state.searchBooks.length : this.state.books.length
 
-    for (let i = 0; i < this.state.books.length; i++) {
+    for (let i = 0; i < bookLength; i++) {
       bookArray.push(
-        this.createBook(i)
+         this.createBook(i, this.state.searchMode)
       )
     }
     return bookArray.reverse()
   }
 
   removeBookFromArray = (id) => {
-    const filtered = this.state.books.filter((component) => component.book_id !== id)
-    
-    this.setState({
-      books: filtered
-    })
+    let filtered
+
+    if (!this.state.searchMode) {
+      filtered = this.state.books.filter((component) => component.book_id !== id)
+      this.setState({books: filtered})
+    } else {
+      filtered = this.state.searchBooks.filter((component) => component.book_id !== id)
+      this.setState({searchBooks: filtered})
+    }
+   
   }
 
   toggleTemplate = () => {
@@ -83,10 +91,32 @@ export default class Library extends Component {
     return this.state.displayTemplate ? <BookTemplate remove={this.removeBookFromArray} addBook={this.addToBooksArray}/> : null
   }
 
+  filter = (id) => {
+    const books = this.state.books
+    let searchMode = true
+
+    let arr = []
+    for (let i = 0; i < id.length; i++) {
+      arr.push(id[i].book_id)
+    }
+
+    let searchedBooks = books.filter((booksValue) => arr.indexOf(booksValue.book_id) !== -1)
+
+    if (this.state.books.length === searchedBooks.length) {
+      searchMode = false
+    }
+
+    this.setState({
+      searchBooks: searchedBooks,
+      searchMode: searchMode
+    })
+
+  }
+
   render() {
     return (
       <div className='wrapper'>
-        <Header toggleTemplate={this.toggleTemplate} />
+        <Header toggleTemplate={this.toggleTemplate} filter={this.filter}/>
         <div className='book-wrapper'>
           {this.getBookTemplate()}
           {this.displayAllBooks()}

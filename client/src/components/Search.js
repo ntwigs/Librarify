@@ -15,7 +15,7 @@ export default class Search extends Component {
 
   componentDidMount() {
     socket.on('result', (value) => {
-      console.log(value)
+      this.props.filter(value)
     })
   }
 
