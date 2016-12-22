@@ -26,7 +26,7 @@ export default class Header extends Component {
     return (
       <div className='header'>
         <div className='text-field'>
-          <h1 className='header-text'>LIBRARIFY</h1>
+          <h1 className='header-text' ><a href='#'>Librarify</a></h1>
         </div>
         <div className='action-field'>
           <Search filter={this.props.filter}/>

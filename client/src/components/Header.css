@@ -3,13 +3,26 @@
   height: 5%;
   background-color: white;
   display: flex;
+  position: fixed;
+  top: 0px;
+  z-index: 9999;
+  box-shadow: 0 4px 5px 0 rgba(0,0,0,0.01),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.13);
 }
 
 .header-text {
   display: flex;
-  color: white;
   align-self: center;
   margin-left: 20px;
+}
+
+.header-text a {
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: none;
+  transition: color 250ms;
+}
+
+.header-text a:hover {
+  color: rgba(0, 0, 0, 1);
 }
 
 .add-book {
@@ -23,7 +36,6 @@
   opacity: 0.6;
   transition: all 250ms;
   cursor: pointer;
-
 }
 
 .add-book:hover {

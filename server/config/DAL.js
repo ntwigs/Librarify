@@ -133,7 +133,8 @@ export default class DAL {
   bookSearch(text) {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        this.db.all('SELECT book_id FROM Books WHERE book_name LIKE (?)', '%' + text + '%', (err, res) => {
+        const hej = ''
+        this.db.all('SELECT author_name, book_name, book_cover, book_id FROM Books INNER JOIN Authors ON Books.book_author=Authors.author_id WHERE book_name LIKE (?) OR author_name LIKE (?)', '%' + text + '%', '%' + text + '%', (err, res) => {
           if (err) {
             reject(err)
           }
