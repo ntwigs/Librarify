@@ -59,3 +59,19 @@
   width: 100%;
   height: 100%;
 }
+
+.search-container {
+  align-self: center;
+  height: 25px;
+  background-size: cover;
+  background-position: center center;
+  -webkit-transition: all 250ms;
+  transition: all 250ms;
+  cursor: pointer;
+  display: flex;
+}
+
+.searchbar {
+  margin-right: 20px;
+}
+

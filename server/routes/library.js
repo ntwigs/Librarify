@@ -1,12 +1,16 @@
 import express from 'express'
 import DAL from '../config/DAL'
 import ImageSearch from '../config/ImageSearch'
+import socket from 'socket.io'
 
 const router = express.Router()
+const io = socket()
 
 router.get('/', (req, res) => {
   const dal = new DAL()
   let books
+
+ 
 
   dal.readAll()
   .then((e) => books = e)
@@ -50,6 +54,12 @@ router.get('/delete/:id', (req, res) => {
 router.get('/:id', (req, res) => {
   const bookId = req.params.id
   let book
+
+   io.on('connection', (client) => {
+    client.on('searching', (data) => {
+      console.log(data)
+    })
+  })
   
   const dal = new DAL()
   dal.getOneBook(bookId)
@@ -71,6 +81,15 @@ router.get('/update/:id/:title/:author', (req, res) => {
   .then(() => dal.close())
   .then(() => res.send('Success'))
   .catch((err) => res.send(err))
+})
+
+router.get('/search', (req, res) => {
+   io.on('connection', (client) => {
+    client.on('searching', (data) => {
+      console.log(data)
+    })
+  })
+
 })
 
 export default router
