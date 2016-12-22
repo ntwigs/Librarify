@@ -77,10 +77,6 @@ export default class Book extends Component {
               <h5 className="cat-author">AUTHOR</h5>
               <TextDisplay text={this.state.author} editable={this.state.edit} store={this.setNewAuthor}/>
             </div>
-            <div className="year section">
-              <h5 className="cat-year">YEAR</h5>
-              <TextDisplay text={'1866'} />
-            </div>
           </div>
           <div className="footer">
   <Save display={this.state.edit} edit={this.enableEdit} save={this.saveChanges} id={this.state.id} changes={this.getChanges} idChange={this.changeId} changeCover={this.changeCover} addBook={this.bookingsYes}/>

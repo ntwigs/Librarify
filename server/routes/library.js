@@ -23,12 +23,7 @@ router.get('/create/:title/:author', (req, res) => {
   let createdBook
 
   imageSearch.search(title, author)
-  .then((image) => {
-    console.log(image)
-    
-    return dal.createNewBook(title, author, image)
-    
-  })
+  .then((image) => dal.createNewBook(title, author, image))
   .then((result) => {
     createdBook = result
     return dal.close()
