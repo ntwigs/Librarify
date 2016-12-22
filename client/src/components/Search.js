@@ -20,7 +20,6 @@ export default class Search extends Component {
   }
 
   inputToggle = () => {
-    socket.emit('connected')
     const toggle = this.state.input ? false : true
     this.setState({input: toggle})
   }
