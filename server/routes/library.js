@@ -21,15 +21,26 @@ router.get('/create/:title/:author', (req, res) => {
   const imageSearch = new ImageSearch()
   const dal = new DAL()
   let createdBook
+  let authId
+  let bookId
+  let image
 
   imageSearch.search(title, author)
-  .then((image) => dal.createNewBook(title, author, image))
+  .then(img => image = img)
+  .then(() => dal.checkAuthor(author))
+  .then(authorName => dal.getAuthorId(authorName))
+  .then(authorId =>  authId = authorId)
+  .then(() => dal.createBook(title, image))
+  .then((id) => dal.insertRelation(id, authId))
+  .then((bid) => dal.getBookOnCreation(bid, authId))
   .then((result) => {
+    console.log(result)
     createdBook = result
     return dal.close()
   })
   .then(() => res.send(createdBook))
-  .catch((err) => res.send(err))
+  .catch((err) => console.log(err))
+
 })
 
 router.get('/delete/:id', (req, res) => {

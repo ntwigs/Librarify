@@ -33,7 +33,7 @@ export default class Library extends Component {
 
     return <Book key={book.book_id}
                  cover={book.book_cover}
-                 title={book.book_name} 
+                 title={book.book_title} 
                  author={book.author_name} 
                  id={book.book_id} 
                  remove={this.removeBookFromArray}
@@ -71,12 +71,19 @@ export default class Library extends Component {
     this.setState({displayTemplate: toggle})
   }
 
+  toggleSearchMode = (searchValue) => {
+    const toggle = this.state.searchMode ? false : true
+    if (searchValue.length > 0) {
+      this.setState({searchMode: toggle})
+    }
+  }
+
   addToBooksArray = (title, author, cover, id) => {
     const book = {
       author_name: author,
       book_cover: cover,
       book_id: id,
-      book_name: title
+      book_title: title
     }
 
     this.setState({
@@ -116,7 +123,7 @@ export default class Library extends Component {
   render() {
     return (
       <div className='wrapper'>
-        <Header toggleTemplate={this.toggleTemplate} filter={this.filter}/>
+        <Header toggleTemplate={this.toggleTemplate} toggleSearch={this.toggleSearchMode} filter={this.filter}/>
         <div className='book-wrapper'>
           {this.getBookTemplate()}
           {this.displayAllBooks()}

@@ -9,7 +9,8 @@ export default class Search extends Component {
   constructor() {
     super()
     this.state = {
-      input: false
+      input: false,
+      text: ''
     }
   }
 
@@ -29,13 +30,15 @@ export default class Search extends Component {
     const toggle = this.state.input ? false : true
     toggle ? socket.emit('openDB') : socket.emit('closeDB')
     this.setState({input: toggle})
+    this.props.toggleSearch(this.state.text)
   }
 
   getInput() {
-    return this.state.input ? <input className='searchbar' type='text' onChange={this.sendInput}></input> : null
+    return this.state.input ? <input defaultValue={this.state.text} className='searchbar' type='text' onChange={this.sendInput}></input> : null
   }
 
-  sendInput(e) {
+  sendInput = (e) => {
+    this.setState({text: e.target.value})
     socket.emit('searching', e.target.value)
   }
 
