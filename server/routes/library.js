@@ -34,9 +34,19 @@ router.get('/create/:title/:author', (req, res) => {
 
 router.get('/delete/:id', (req, res) => {
   const bookId = req.params.id
-
   const dal = new DAL()
-  dal.deleteBook(bookId)
+
+  let author
+  
+  dal.getAuthorsBook(bookId)
+  .then((book) => author = book)
+  .then(() => dal.deleteBook(bookId))
+  .then(() => dal.authorHasBooks(author.author_name))
+  .then((books) => {
+    if (books === undefined) {
+      return dal.deleteAuthor(author.author_id)
+    }
+  })
   .then(() => dal.close())
   .then(() => res.send('success'))
   .catch((err) => res.send(err))

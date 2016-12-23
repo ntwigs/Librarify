@@ -82,7 +82,7 @@ export default class DAL {
 
   getBookOnCreation(title, author) {
     return new Promise((resolve, reject) => {
-      this.db.get('SELECT * FROM Books INNER JOIN AUthors ON Books.book_author=Authors.author_id WHERE book_name = (?) AND author_name = (?)', title, author, (err, res) => {
+      this.db.get('SELECT * FROM Books INNER JOIN Authors ON Books.book_author=Authors.author_id WHERE book_name = (?) AND author_name = (?)', title, author, (err, res) => {
         if (err) {
           reject(err)
         }
@@ -95,6 +95,45 @@ export default class DAL {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
         this.db.run('DELETE FROM Books WHERE book_id = (?)', id, (err, res) => {
+          if (err) {
+            reject(err)
+          }
+          resolve(res)
+        })
+      })
+    })
+  }
+
+  getAuthorsBook(id) {
+    return new Promise((resolve, reject) => {
+      this.db.serialize(() => {
+        this.db.get('SELECT * FROM Books INNER JOIN Authors ON Books.book_author=Authors.author_id WHERE book_id = (?)', id, (err, res) => {
+          if (err) {
+            reject(err)
+          }
+          resolve(res)
+        })
+      })
+    })
+  }
+
+  authorHasBooks(author) {
+    return new Promise((resolve, reject) => {
+      this.db.serialize(() => {
+        this.db.get('SELECT * FROM Books INNER JOIN Authors ON Books.book_author=Authors.author_id WHERE author_name = (?)', author, (err, res) => {
+          if (err) {
+            reject(err)
+          }
+          resolve(res)
+        })
+      })
+    })
+  }
+
+  deleteAuthor(id) {
+    return new Promise((resolve, reject) => {
+      this.db.serialize(() => {
+        this.db.run('DELETE FROM Authors WHERE author_id = (?)', id, (err, res) => {
           if (err) {
             reject(err)
           }
