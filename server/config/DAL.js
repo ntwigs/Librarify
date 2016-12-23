@@ -86,7 +86,6 @@ export default class DAL {
   getBookOnCreation(title, author) {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        console.log(title, author)
         this.db.get(`SELECT * 
                     FROM BooksAuthors 
                     INNER JOIN Authors

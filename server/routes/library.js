@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 
 router.get('/create/:title/:author', (req, res) => {
   const title = req.params.title
-  const author = req.params.author
+  const author = req.params.author.split(',')
   const imageSearch = new ImageSearch()
   const dal = new DAL()
   let createdBook
@@ -27,14 +27,34 @@ router.get('/create/:title/:author', (req, res) => {
 
   imageSearch.search(title, author)
   .then(img => image = img)
-  .then(() => dal.checkAuthor(author))
-  .then(authorName => dal.getAuthorId(authorName))
+  .then(() => {
+    let authorNameArr = []
+    for (let i = 0; i < author.length; i++) {
+      authorNameArr.push(dal.checkAuthor(author[i]))
+    }
+    return authorNameArr
+  })
+  .then(authorName => {
+    let authorIdArr = []
+    for (let i = 0; i < authorName.length; i++) {
+      authorIdArr.push(dal.getAuthorId(authorName[i]))
+    }
+    return authorIdArr
+  })
   .then(authorId =>  authId = authorId)
   .then(() => dal.createBook(title, image))
-  .then((id) => dal.insertRelation(id, authId))
-  .then((bid) => dal.getBookOnCreation(bid, authId))
+  .then((id) => {
+    let bookIdArr = []
+    for (let i = 0; i < authId.length; i++) {
+      bookIdArr.push(dal.insertRelation(id, authId[i]))
+    }
+    return bookIdArr
+  })
+  .then((bid) => {
+    
+    dal.getBookOnCreation(bid, authId)
+  })
   .then((result) => {
-    console.log(result)
     createdBook = result
     return dal.close()
   })

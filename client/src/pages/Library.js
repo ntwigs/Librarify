@@ -39,12 +39,12 @@ export default class Library extends Component {
                  remove={this.removeBookFromArray}
                  new={false} 
     />
+
   }
 
   displayAllBooks = () => {
     let bookArray = []
     const bookLength = this.state.searchMode ? this.state.searchBooks.length : this.state.books.length
-
     for (let i = 0; i < bookLength; i++) {
       bookArray.push(
          this.createBook(i, this.state.searchMode)
@@ -91,7 +91,6 @@ export default class Library extends Component {
     })
 
     this.toggleTemplate()
-
   }
 
   getBookTemplate() {
@@ -117,7 +116,6 @@ export default class Library extends Component {
       searchBooks: searchedBooks,
       searchMode: searchMode
     })
-
   }
 
   render() {

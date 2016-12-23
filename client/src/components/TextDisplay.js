@@ -6,13 +6,23 @@ export default class TextDisplay extends Component {
   }
 
   changeText = (e) => {
-    this.props.store(e.target.value)
+    this.props.store(e.target.value, this.props.id)
+  }
+
+  getDelete() {
+    return this.props.id > 0 && this.props.editable ? <div className='delete-author' onClick={this.delete}></div> : null
+  }
+
+  delete = () => {
+    this.props.delete(this.props.id)
   }
 
   render() {
     return (
-      this.getText()
+      <div className='author-input'>
+        {this.getText()}
+        {this.getDelete()}
+      </div>
     )
   }
 }
-
