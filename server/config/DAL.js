@@ -26,7 +26,9 @@ export default class DAL {
 
   checkAuthor(author) {
     return new Promise((resolve, reject) => {
-      this.db.get('SELECT * FROM Authors WHERE author_name = (?)', author, (err, res) => {
+      this.db.get(`SELECT * 
+                   FROM Authors 
+                   WHERE author_name = (?)`, author, (err, res) => {
         if (err) {
           reject(err)
         }
@@ -39,9 +41,9 @@ export default class DAL {
     })
   }
 
-  getAuthorId(author) {
+  createAuthor(author) {
     return new Promise((resolve, reject) => {
-      this.db.get('SELECT author_id FROM Authors WHERE author_name = (?)', author, (err, res) => {
+      this.db.run(`INSERT INTO Authors (author_name) VALUES (?)`, author, (err, res) => {
         if (err) {
           reject(err)
         }
@@ -50,9 +52,9 @@ export default class DAL {
     })
   }
 
-  createAuthor(author) {
+  getAuthorId(author) {
     return new Promise((resolve, reject) => {
-      this.db.run('INSERT INTO Authors (author_name) VALUES (?)', author, (err, res) => {
+      this.db.get(`SELECT author_id FROM Authors WHERE author_name = (?)`, author, (err, res) => {
         if (err) {
           reject(err)
         }
@@ -63,22 +65,11 @@ export default class DAL {
 
   createBook(title, image) {
     return new Promise((resolve, reject) => {
-      this.db.run('INSERT INTO Books (book_title, book_cover) VALUES (?, ?)', title, image.thumbnail.url, function(err, res) {
+      this.db.run(`INSERT INTO Books (book_title, book_cover) VALUES (?, ?)`, title, image.thumbnail.url, function(err, res) {
        if (err) {
           reject(err)
         }
         resolve(this.lastID)
-      })
-    })
-  }
-
-  createAuthorBookRelation(bookid, authorid) {
-    return new Promise((resolve, reject) => {
-      this.db.run('INSERT INTO BooksAuthors (book_id, author_id) VALUES (?, ?)', bookid, authorid.thumbnail.url, (err, res) => {
-        if (err) {
-          reject(err)
-        }
-        resolve(res)
       })
     })
   }
@@ -106,7 +97,7 @@ export default class DAL {
   insertRelation(bookid, authorid) {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        this.db.run('INSERT INTO BooksAuthors (book_id, author_id) VALUES (?, ?)', bookid, authorid.author_id, (err, res) => {
+        this.db.run(`INSERT INTO BooksAuthors (book_id, author_id) VALUES (?, ?)`, bookid, authorid.author_id, (err, res) => {
           if (err) {
             reject(err)
           }
@@ -119,7 +110,8 @@ export default class DAL {
   deleteBook(id) {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        this.db.run('DELETE FROM Books WHERE book_id = (?)', id, (err, res) => {
+        this.db.run(`DELETE FROM Books
+                     WHERE book_id = (?)`, id, (err, res) => {
           if (err) {
             reject(err)
           }
@@ -151,7 +143,8 @@ export default class DAL {
   removeFromBooksAuthors(authorId) {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        this.db.get(`DELETE FROM BooksAuthors WHERE author_id = (?)`, authorId, (err, res) => {
+        this.db.get(`DELETE FROM BooksAuthors 
+                     WHERE author_id = (?)`, authorId, (err, res) => {
           if (err) {
             reject(err)
           }
@@ -180,10 +173,11 @@ export default class DAL {
     })
   }
 
-  deleteAuthor(id) {
+  deleteAuthor(id) { 
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        this.db.run('DELETE FROM Authors WHERE author_id = (?)', id, (err, res) => {
+        this.db.run(`DELETE FROM Authors 
+                     WHERE author_id = (?)`, id, (err, res) => {
           if (err) {
             reject(err)
           }
@@ -193,10 +187,16 @@ export default class DAL {
     })
   }
 
-  getOneBook(id) {
+  getOneBook(id) { 
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        this.db.get('SELECT * FROM Books INNER JOIN Authors ON Books.book_author=Authors.author_id WHERE book_id = (?)', id, (err, res) => {
+        this.db.get(`SELECT author_name, book_title, book_cover, BooksAuthors.book_id
+                     FROM BooksAuthors
+                     INNER JOIN Authors
+                     ON BooksAuthors.author_id = Authors.author_id
+                     INNER JOIN Books
+                     ON BooksAuthors.book_id = Books.book_id
+                     WHERE Books.book_id = (?)`, id, (err, res) => {
           if (err) {
             reject(err)
           }
@@ -206,10 +206,12 @@ export default class DAL {
     })
   }
 
-  updateBook(id, title) {
+  updateBook(id, title) { 
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        this.db.run('UPDATE Books SET book_title = (?) WHERE book_id = (?)', title, id, (err, res) => {
+        this.db.run(`UPDATE Books 
+                     SET book_title = (?)
+                     WHERE book_id = (?)`, title, id, (err, res) => {
           if (err) {
             reject(err)
           }
@@ -221,7 +223,9 @@ export default class DAL {
 
   updateAuthor(authorId, bookId) {
     return new Promise((resolve, reject) => {
-      this.db.run('UPDATE BooksAuthors SET author_id = (?) WHERE book_id = (?)', authorId, bookId, (err, res) => {
+      this.db.run(`UPDATE BooksAuthors 
+                   SET author_id = (?)
+                   WHERE book_id = (?)`, authorId, bookId, (err, res) => {
         if (err) {
           reject(err)
         }

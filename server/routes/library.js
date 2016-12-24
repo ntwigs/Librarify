@@ -91,7 +91,6 @@ router.get('/update/:id/:title/:author', (req, res) => {
   .then(() => dal.updateBook(bookId, title))
   .then((author) => dal.authorHasBooks(oldAuthor.author_id))
   .then((books) => {
-    console.log(books)
     if (books === undefined) {
       return dal.deleteAuthor(oldAuthor.author_id)
     }
