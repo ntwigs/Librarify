@@ -7,7 +7,6 @@ export default class Save extends Component {
 
   save = () => {
     const changes = this.props.changes()
-    console.log(changes)
     if (this.props.id) {
       return this.updateOld(changes)
     }

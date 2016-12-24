@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 
 router.get('/create/:title/:author', (req, res) => {
   const title = req.params.title
-  const author = req.params.author.split(',')
+  const author = req.params.author
   const imageSearch = new ImageSearch()
   const dal = new DAL()
   let createdBook
@@ -27,33 +27,12 @@ router.get('/create/:title/:author', (req, res) => {
 
   imageSearch.search(title, author)
   .then(img => image = img)
-  .then(() => {
-    let authorNameArr = []
-    for (let i = 0; i < author.length; i++) {
-      authorNameArr.push(dal.checkAuthor(author[i]))
-    }
-    return authorNameArr
-  })
-  .then(authorName => {
-    let authorIdArr = []
-    for (let i = 0; i < authorName.length; i++) {
-      authorIdArr.push(dal.getAuthorId(authorName[i]))
-    }
-    return authorIdArr
-  })
+  .then(() => dal.checkAuthor(author))
+  .then(authorName => dal.getAuthorId(authorName))
   .then(authorId =>  authId = authorId)
   .then(() => dal.createBook(title, image))
-  .then((id) => {
-    let bookIdArr = []
-    for (let i = 0; i < authId.length; i++) {
-      bookIdArr.push(dal.insertRelation(id, authId[i]))
-    }
-    return bookIdArr
-  })
-  .then((bid) => {
-    
-    dal.getBookOnCreation(bid, authId)
-  })
+  .then((id) => dal.insertRelation(id, authId))
+  .then((bid) => dal.getBookOnCreation(bid, authId))
   .then((result) => {
     createdBook = result
     return dal.close()
@@ -72,15 +51,16 @@ router.get('/delete/:id', (req, res) => {
   dal.getAuthorsBook(bookId)
   .then((book) => author = book)
   .then(() => dal.deleteBook(bookId))
-  .then(() => dal.authorHasBooks(author.author_name))
+  .then(() => dal.authorHasBooks(author.author_id))
   .then((books) => {
     if (books === undefined) {
       return dal.deleteAuthor(author.author_id)
     }
   })
+  .then(() => dal.removeFromBooksAuthors(author.author_id))
   .then(() => dal.close())
   .then(() => res.send('success'))
-  .catch((err) => res.send(err))
+  .catch((err) => console.log(err))
 })
 
 router.get('/:id', (req, res) => {
@@ -99,14 +79,33 @@ router.get('/update/:id/:title/:author', (req, res) => {
   const bookId = req.params.id
   const title = req.params.title
   const author = req.params.author
-
   const dal = new DAL()
-  dal.checkAuthor(req.params.author)
+  let authorId
+  let oldAuthor
+
+  dal.getAuthorsBook(bookId)
+  .then(author => oldAuthor = author)
+  // .then((author) => dal.authorHasBooks(author.author_id))
+  // .then((books) => {
+  //   console.log(books)
+  //   if (books === undefined) {
+  //     return dal.deleteAuthor(author.author_id)
+  //   }
+  // })
+  .then(() => dal.checkAuthor(req.params.author))
   .then(() => dal.getAuthorId(req.params.author))
-  .then((authorId) => dal.updateBook(bookId, title, authorId.author_id))
+  .then((author) => dal.updateAuthor(author.author_id, bookId))
+  .then(() => dal.updateBook(bookId, title))
+  .then((author) => dal.authorHasBooks(oldAuthor.author_id))
+  .then((books) => {
+    console.log(books)
+    if (books === undefined) {
+      return dal.deleteAuthor(oldAuthor.author_id)
+    }
+  })
   .then(() => dal.close())
   .then(() => res.send('Success'))
-  .catch((err) => res.send(err))
+  .catch((err) => console.log(err))
 })
 
 export default router

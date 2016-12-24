@@ -132,7 +132,7 @@ export default class DAL {
   getAuthorsBook(id) {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        this.db.get(`SELECT author_name, book_title, book_cover, BooksAuthors.book_id
+        this.db.get(`SELECT author_name, book_title, book_cover, BooksAuthors.book_id, BooksAuthors.author_id
                      FROM BooksAuthors
                      INNER JOIN Authors
                      ON BooksAuthors.author_id = Authors.author_id
@@ -148,10 +148,29 @@ export default class DAL {
     })
   }
 
+  removeFromBooksAuthors(authorId) {
+    return new Promise((resolve, reject) => {
+      this.db.serialize(() => {
+        this.db.get(`DELETE FROM BooksAuthors WHERE author_id = (?)`, authorId, (err, res) => {
+          if (err) {
+            reject(err)
+          }
+          resolve(res)
+        })
+      })
+    })
+  }
+
   authorHasBooks(author) {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        this.db.get('SELECT * FROM Books INNER JOIN Authors ON Books.book_author=Authors.author_id WHERE author_name = (?)', author, (err, res) => {
+        this.db.get(`SELECT author_name, book_title, book_cover, BooksAuthors.book_id
+                     FROM BooksAuthors
+                     INNER JOIN Authors
+                     ON BooksAuthors.author_id = Authors.author_id
+                     INNER JOIN Books
+                     ON BooksAuthors.book_id = Books.book_id
+                     WHERE Authors.author_id = (?)`, author, (err, res) => {
           if (err) {
             reject(err)
           }
@@ -187,15 +206,26 @@ export default class DAL {
     })
   }
 
-  updateBook(id, title, author) {
+  updateBook(id, title) {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        this.db.run('UPDATE Books SET book_author = (?), book_title = (?) WHERE book_id = (?) ', author, title, id, (err, res) => {
+        this.db.run('UPDATE Books SET book_title = (?) WHERE book_id = (?)', title, id, (err, res) => {
           if (err) {
             reject(err)
           }
           resolve(res)
         })
+      })
+    })
+  }
+
+  updateAuthor(authorId, bookId) {
+    return new Promise((resolve, reject) => {
+      this.db.run('UPDATE BooksAuthors SET author_id = (?) WHERE book_id = (?)', authorId, bookId, (err, res) => {
+        if (err) {
+          reject(err)
+        }
+        resolve(res)
       })
     })
   }

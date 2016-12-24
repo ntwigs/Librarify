@@ -10,10 +10,10 @@ export default class Book extends Component {
     super(props)
     this.state = {
       title: this.props.title,
-      author: [this.props.author],
+      author: this.props.author,
       cover: this.props.cover,
       newTitle: '',
-      newAuthor: [''],
+      newAuthor: '',
       edit: this.props.new,
       id: this.props.id
     }
@@ -28,17 +28,14 @@ export default class Book extends Component {
     this.setState({newTitle: title})
   }
 
-  setNewAuthor = (author, index) => {
-    let authors = this.state.newAuthor
-    authors[index] = author
-    this.setState({newAuthor: authors})
+  setNewAuthor = (author) => {
+    this.setState({newAuthor: author})
   }
 
   getChanges = () => {
     const newTitle = this.state.newTitle !== '' ? this.state.newTitle : this.state.title 
     const newAuthor = this.state.newAuthor !== '' ? this.state.newAuthor : this.state.author
-    let authors = newAuthor.join(',')
-    return {title: newTitle, author: authors}
+    return {title: newTitle, author: newAuthor}
   }
   
   saveChanges = () => {
@@ -62,40 +59,6 @@ export default class Book extends Component {
     this.props.addBook(title, author, cover, id)
   }
 
-  addAuthorFields = () => {
-    const field = this.state.author
-    this.setState({
-      author: [...field, '']
-    }) 
-  }
-
-  getAuthorFields = () => {
-    let authorArr = []
-    for (let i = 0; i < this.state.author.length && i < 2; i++) {
-      authorArr.push(this.createField(this.state.author[i], i))
-    }
-    return authorArr
-  }
-
-  createField(author, index) {
-    return <TextDisplay key={index} id={index} text={author} editable={this.state.edit} store={this.setNewAuthor} delete={this.deleteField}/>
-  }
-
-  deleteField = (id) => {
-    const fields = this.state.author
-    const newFields = this.state.newAuthor
-    fields.splice(id, 1)
-    newFields.splice(id, 1)
-    this.setState({
-      author: fields,
-      newAuthor: newFields
-    })
-  }
-
-  getAddButton = () => {
-    return this.state.edit ? <h7 className='add-author-button' onClick={this.addAuthorFields}>ADD</h7> : null 
-  }
-
   render() {
     return (
       <div className="container">
@@ -111,8 +74,7 @@ export default class Book extends Component {
             </div>
             <div className="author section">
               <h5 className="cat-author">AUTHOR</h5>
-              {this.getAddButton()}
-              {this.getAuthorFields()}
+              <TextDisplay text={this.state.author} editable={this.state.edit} store={this.setNewAuthor} delete={this.deleteField}/>
             </div>
           </div>
           <div className="footer">
