@@ -2,7 +2,7 @@
 
 echo 'Initializing Import'
 
-sqlite3  config/secret/Library <<EOS
+sqlite3  server/config/secret/Library <<EOS
 	INSERT INTO Authors (author_name) VALUES ("Douglas Crockford"),
 						 ("David Flanagan"),
 						 ("Marijn Haverbeke"),
@@ -19,7 +19,7 @@ sqlite3  config/secret/Library <<EOS
 						 ("Anthony Malinaro"),
 						 ("Kristina Chodorow");
 
-	INSERT INTO Books (book_title, book_cover) VALUES ("Javascript: The Good Parts"	"https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRqp3qNyCRz25MZt7_jZ2DkcLR1b8KjMotN-4thKDetwtqtzUwfc0_y0ELo"),
+	INSERT INTO Books (book_title, book_cover) VALUES ("Javascript: The Good Parts", "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRqp3qNyCRz25MZt7_jZ2DkcLR1b8KjMotN-4thKDetwtqtzUwfc0_y0ELo"),
 							  ("JavaScript: The Definitive Guide", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcT0fDAJE8Y_WLC0OUmShzJSUQGLuasl-Q9_WZEJ2qjZ7T9Vnkd2aHlQWQ"),
 							  ("Eloquent JavaScript", "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSP59zPOJZsg3RQBBOKpg5_IkgGu046w53JwX_tnL6iVdfpxxoxaM3FGfm6"),
 							  ("SurviveJS: React", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRSWuHrHqDaTXHkEDo7j8PpoZZqIMng8TswsJMhQ2iP2uyuUMW-8BUneho"),
@@ -42,14 +42,14 @@ sqlite3  config/secret/Library <<EOS
 							     ("5", "5"),
 							     ("6", "6"),
 							     ("7", "7"),
-							     ("10", "9"),
-							     ("11", "10"),
-							     ("12", "11"),
-							     ("13", "12"),
-							     ("14", "13"),
-							     ("15", "14"),
-							     ("16", "15"),
-							     ("17", "16");
+							     ("8", "8"),
+							     ("9", "9"),
+							     ("10", "10"),
+							     ("11", "11"),
+							     ("12", "12"),
+							     ("13", "13"),
+							     ("14", "14"),
+							     ("15", "15");
 EOS
 
 echo 'Import Done.'
