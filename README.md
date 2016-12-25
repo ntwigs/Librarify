@@ -12,7 +12,7 @@ The internet needs more '-ifys'.
 * Go into the server folder - run 'npm install'
 * Go into the client folder - run 'npm install'
 
-#### Everything is now up and running! (*Almost*)
+#### Everything is now up and running! (*Almost*) - If you only want the basic - less fun condition - then you can stop  right now.
 
 ## Getting the automatic image covers [official instructions](https://github.com/vadimdemedes/google-images)
 Create Google Custom Search Engine (CSE) [here](https://cse.google.com/cse).
