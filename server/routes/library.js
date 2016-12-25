@@ -57,7 +57,7 @@ router.get('/delete/:id', (req, res) => {
       return dal.deleteAuthor(author.author_id)
     }
   })
-  .then(() => dal.removeFromBooksAuthors(author.author_id))
+  .then(() => dal.removeFromBooksAuthors(author.author_id, bookId))
   .then(() => dal.close())
   .then(() => res.send('success'))
   .catch((err) => console.log(err))

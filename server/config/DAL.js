@@ -54,7 +54,9 @@ export default class DAL {
 
   getAuthorId(author) {
     return new Promise((resolve, reject) => {
-      this.db.get(`SELECT author_id FROM Authors WHERE author_name = (?)`, author, (err, res) => {
+      this.db.get(`SELECT author_id
+                   FROM Authors 
+                   WHERE author_name = (?)`, author, (err, res) => {
         if (err) {
           reject(err)
         }
@@ -65,7 +67,8 @@ export default class DAL {
 
   createBook(title, image) {
     return new Promise((resolve, reject) => {
-      this.db.run(`INSERT INTO Books (book_title, book_cover) VALUES (?, ?)`, title, image.thumbnail.url, function(err, res) {
+      this.db.run(`INSERT INTO Books (book_title, book_cover)
+                   VALUES (?, ?)`, title, image.thumbnail.url, function(err, res) {
        if (err) {
           reject(err)
         }
@@ -121,11 +124,12 @@ export default class DAL {
     })
   }
 
-  removeFromBooksAuthors(authorId) {
+  removeFromBooksAuthors(authorId, bookId) {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
         this.db.get(`DELETE FROM BooksAuthors 
-                     WHERE author_id = (?)`, authorId, (err, res) => {
+                     WHERE author_id = (?)
+                     AND book_id = (?)`, authorId, bookId, (err, res) => {
           if (err) {
             reject(err)
           }
