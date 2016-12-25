@@ -74,30 +74,11 @@ export default class DAL {
     })
   }
 
-  getBookOnCreation(title, author) {
-    return new Promise((resolve, reject) => {
-      this.db.serialize(() => {
-        this.db.get(`SELECT * 
-                    FROM BooksAuthors 
-                    INNER JOIN Authors
-                    ON BooksAuthors.author_id = Authors.author_id
-                    INNER JOIN Books
-                    ON BooksAuthors.book_id = Books.book_id 
-                    WHERE BooksAuthors.book_id = (?)
-                    AND BooksAuthors.author_id = (?)`, title, author.author_id, (err, res) => {
-          if (err) {
-            reject(err)
-          }
-          resolve(res)
-        })
-      })
-    })
-  }
-
   insertRelation(bookid, authorid) {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
-        this.db.run(`INSERT INTO BooksAuthors (book_id, author_id) VALUES (?, ?)`, bookid, authorid.author_id, (err, res) => {
+        this.db.run(`INSERT INTO BooksAuthors (book_id, author_id)
+                     VALUES (?, ?)`, bookid, authorid.author_id, (err, res) => {
           if (err) {
             reject(err)
           }
@@ -173,7 +154,7 @@ export default class DAL {
     })
   }
 
-  deleteAuthor(id) { 
+  deleteAuthor(id) {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
         this.db.run(`DELETE FROM Authors 
@@ -187,7 +168,7 @@ export default class DAL {
     })
   }
 
-  getOneBook(id) { 
+  getOneBook(id) {
     return new Promise((resolve, reject) => {
       this.db.serialize(() => {
         this.db.get(`SELECT author_name, book_title, book_cover, BooksAuthors.book_id

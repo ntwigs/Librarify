@@ -32,7 +32,7 @@ router.get('/create/:title/:author', (req, res) => {
   .then(authorId =>  authId = authorId)
   .then(() => dal.createBook(title, image))
   .then((id) => dal.insertRelation(id, authId))
-  .then((bid) => dal.getBookOnCreation(bid, authId))
+  .then((bid) => dal.getOneBook(bid))
   .then((result) => {
     createdBook = result
     return dal.close()
