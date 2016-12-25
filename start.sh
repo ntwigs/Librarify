@@ -14,7 +14,7 @@ sqlite3 config/secret/Library <<EOS
 		book_cover Text Not Null
 	);
 	CREATE TABLE Authors(
-		book_id Integer Unique Primary Key Not Null,
+		author_id Integer Unique Primary Key Not Null,
 		author_name Text Not Null
 	);
 	CREATE TABLE BooksAuthors(
