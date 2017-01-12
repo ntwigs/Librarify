@@ -22,12 +22,31 @@ export default class DAL {
   readAll(db) {
     return new Promise((res, rej) => {
       const collection = db.collection('Books')
+      
       collection.find({}).toArray((err, result) => {
         if (err) {
           rej(err)
         }
         res(result)
       }) 
+    })
+  }
+
+  createBook(db, title, author, image) {
+    return new Promise((res, rej) => {
+      const collection = db.collection('Books')
+      let book = {
+        'title': title,
+        'author': author,
+        'image': image
+      }
+      collection.insert(book, (err, result) => {
+        if (err) {
+          rej(err)
+        }
+        res(result)
+      })
+
     })
   }
 

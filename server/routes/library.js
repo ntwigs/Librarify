@@ -22,24 +22,16 @@ router.get('/create/:title/:author', (req, res) => {
   const author = req.params.author
   const imageSearch = new ImageSearch()
   const dal = new DAL()
-  let createdBook
-  let authId
-  let bookId
   let image
+  let connection
 
   imageSearch.search(title, author)
   .then(img => image = img)
-  .then(() => dal.checkAuthor(author))
-  .then(authorName => dal.getAuthorId(authorName))
-  .then(authorId =>  authId = authorId)
-  .then(() => dal.createBook(title, image))
-  .then((id) => dal.insertRelation(id, authId))
-  .then((bid) => dal.getOneBook(bid))
-  .then((result) => {
-    createdBook = result
-    return dal.close()
-  })
-  .then(() => res.send(createdBook))
+  .then(() => dal.connect())
+  .then((db) => connection = db)
+  .then(() => dal.createBook(connection, title, author, image))
+  .then((newBook) => res.send(newBook.ops[0]))
+  .then(() => dal.close(connection))
   .catch((err) => console.log(err))
 
 })
