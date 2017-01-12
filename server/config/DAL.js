@@ -3,28 +3,36 @@ import mongo from './secret/Mongo'
 
 export default class DAL {
   constructor() {
-    this.url = mongo.connection
+    this.url = mongo.connectionURL
     this.mongoClient = mongodb.MongoClient
   }
 
   connect() {
     return new Promise((res, rej) => {
+      console.log(mongo)
       this.mongoClient.connect(this.url, (err, db) => {
         if (err) {
-          reject(err)
+          rej(err)
         }
-        resolve(db)
+        res(db)
       }) 
     })
   }
 
-
-
+  readAll(db) {
+    return new Promise((res, rej) => {
+      const collection = db.collection('Books')
+      collection.find({}).toArray((err, result) => {
+        if (err) {
+          rej(err)
+        }
+        res(result)
+      }) 
+    })
+  }
 
   close(db) {
     db.close()
   }
-
-
 
 }

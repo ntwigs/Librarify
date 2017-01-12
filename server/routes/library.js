@@ -6,13 +6,15 @@ const router = express.Router()
 
 router.get('/', (req, res) => {
   const dal = new DAL()
-  let books
+  let connection
 
-  dal.readAll()
-  .then((e) => books = e)
-  .then(() => dal.close())
-  .then(() => res.send(books))
-  .catch((err) => res.send(err))
+  dal.connect()
+    .then(db => connection = db)
+    .then(() => console.log('connected'))
+    .then(() => dal.readAll(connection))
+    .then((all) => res.send(all))
+    .then(() => dal.close(connection))
+    .catch(err => console.log(err))
 })
 
 router.get('/create/:title/:author', (req, res) => {
