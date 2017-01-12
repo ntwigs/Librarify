@@ -1,4 +1,4 @@
-## Librarify
+## Librarify - MongoDB version
 The internet needs more '-ifys'.
 
 ## How to get this show on the road?
