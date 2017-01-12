@@ -1,3 +1,4 @@
 node_modules
 config/secret/Library
 config/secret/Google-Api.js
+config/secret/Mongo.js
