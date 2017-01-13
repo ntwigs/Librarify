@@ -83,7 +83,7 @@ export default class DAL {
   bookSearch(db, string) {
     return new Promise((res, rej) => {
       const collection = db.collection('Books')
-      collection.find({'title': {$regex: string}})
+      collection.find({'title': {$regex: string}}).toArray()
         .then(result => res(result))
         .catch(err => rej(err))
     })

@@ -4,6 +4,7 @@ import DAL from '../config/DAL'
 export default (server) => class SocketHandling {
   constructor() {
     this.io = socket.listen(server)
+    this.connection
   }
 
   initialize() {
@@ -13,13 +14,15 @@ export default (server) => class SocketHandling {
       })
 
       client.on('searching', (data) => {
-        this.dal.bookSearch(data)
+        this.dal.connect()
+          .then(db => this.connection = db)
+          .then(() => this.dal.bookSearch(this.connection, data))
           .then(res => this.io.emit('result', res))
           .catch(err => console.log(err))
       })
 
       client.on('closeDB', () => {
-        this.dal.close()
+        this.dal.close(this.connection)
       })
     })
   }
