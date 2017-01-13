@@ -13,6 +13,8 @@ const PORT = 8000
 
 app.use(cors())
 
+app.get('/favicon.ico', (req, res, next) =>  res.sendStatus(404))
+
 app.use('/', library)
 
 app.use('*', (req, res) => {

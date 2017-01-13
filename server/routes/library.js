@@ -10,7 +10,6 @@ router.get('/', (req, res) => {
 
   dal.connect()
     .then(db => connection = db)
-    .then(() => console.log('connected'))
     .then(() => dal.readAll(connection))
     .then((all) => res.send(all))
     .then(() => dal.close(connection))
@@ -18,55 +17,50 @@ router.get('/', (req, res) => {
 })
 
 router.get('/create/:title/:author', (req, res) => {
+  const dal = new DAL()
   const title = req.params.title
   const author = req.params.author
   const imageSearch = new ImageSearch()
-  const dal = new DAL()
   let image
   let connection
 
   imageSearch.search(title, author)
-  .then(img => image = img)
-  .then(() => dal.connect())
-  .then((db) => connection = db)
-  .then(() => dal.createBook(connection, title, author, image))
-  .then((newBook) => res.send(newBook.ops[0]))
-  .then(() => dal.close(connection))
-  .catch((err) => console.log(err))
+    .then(img => image = img)
+    .then(() => dal.connect())
+    .then((db) => connection = db)
+    .then(() => dal.createBook(connection, title, author, image))
+    .then((newBook) => res.send(newBook.ops[0]))
+    .then(() => dal.close(connection))
+    .catch((err) => console.log(err))
 
 })
 
 router.get('/delete/:id', (req, res) => {
-  const bookId = req.params.id
   const dal = new DAL()
-
+  const bookId = req.params.id
   let author
-  
-  dal.getAuthorsBook(bookId)
-  .then((book) => author = book)
-  .then(() => dal.deleteBook(bookId))
-  .then(() => dal.authorHasBooks(author.author_id))
-  .then((books) => {
-    if (books === undefined) {
-      return dal.deleteAuthor(author.author_id)
-    }
-  })
-  .then(() => dal.removeFromBooksAuthors(author.author_id, bookId))
-  .then(() => dal.close())
-  .then(() => res.send('success'))
-  .catch((err) => console.log(err))
+  let connection
+
+  dal.connect()
+    .then(db => connection = db)
+    .then(() => dal.deleteBook(connection, bookId))
+    .then(() => res.send('success'))
+    .then(() => dal.close(connection))
+    .catch(err => console.log(err))
 })
 
 router.get('/:id', (req, res) => {
+  const dal = new DAL()
   const bookId = req.params.id
   let book
-  
-  const dal = new DAL()
-  dal.getOneBook(bookId)
-  .then((b) => book = b)
-  .then(() => dal.close())
-  .then(() => res.send(book))
-  .catch((err) => res.send(err))
+  let connection
+
+  dal.connect()
+  .then(db => connection = db)
+  .then(() => dal.readOne(connection, bookId))
+  .then(book => res.send(book))
+  .then(() => dal.close(connection))
+  .catch(err => console.log(err))
 })
 
 router.get('/update/:id/:title/:author', (req, res) => {
