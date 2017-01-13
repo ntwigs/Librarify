@@ -56,36 +56,11 @@ router.get('/:id', (req, res) => {
   let connection
 
   dal.connect()
-  .then(db => connection = db)
-  .then(() => dal.readOne(connection, bookId))
-  .then(book => res.send(book))
-  .then(() => dal.close(connection))
-  .catch(err => console.log(err))
-})
-
-router.get('/update/:id/:title/:author', (req, res) => {
-  const bookId = req.params.id
-  const title = req.params.title
-  const author = req.params.author
-  const dal = new DAL()
-  let authorId
-  let oldAuthor
-
-  dal.getAuthorsBook(bookId)
-  .then(author => oldAuthor = author)
-  .then(() => dal.checkAuthor(req.params.author))
-  .then(() => dal.getAuthorId(req.params.author))
-  .then((author) => dal.updateAuthor(author.author_id, bookId))
-  .then(() => dal.updateBook(bookId, title))
-  .then((author) => dal.authorHasBooks(oldAuthor.author_id))
-  .then((books) => {
-    if (books === undefined) {
-      return dal.deleteAuthor(oldAuthor.author_id)
-    }
-  })
-  .then(() => dal.close())
-  .then(() => res.send('Success'))
-  .catch((err) => console.log(err))
+    .then(db => connection = db)
+    .then(() => dal.readOne(connection, bookId))
+    .then(book => res.send(book))
+    .then(() => dal.close(connection))
+    .catch(err => console.log(err))
 })
 
 export default router
