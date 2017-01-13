@@ -14,8 +14,8 @@ export default (server) => class SocketHandling {
 
       client.on('searching', (data) => {
         this.dal.bookSearch(data)
-        .then(res => this.io.emit('result', res))
-        .catch(err => console.log(err))
+          .then(res => this.io.emit('result', res))
+          .catch(err => console.log(err))
       })
 
       client.on('closeDB', () => {
