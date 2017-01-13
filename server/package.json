@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "listen": "babel-node app.js --presets es2015,stage-2",
-    "start": "nodemon app.js --exec babel-node --presets es2015,stage-2"
+    "start": "nodemon app.js --exec babel-node --presets es2015,stage-2",
+    "populate": "babel-node populate.js --presets es2015,stage-2"
   },
   "repository": {
     "type": "git",
