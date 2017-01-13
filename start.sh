@@ -18,7 +18,7 @@ echo "export default {
 echo 'MongoURL created'
 echo 'Populating DB'
 
-npm run populate.js
+npm run populate
 
 echo 'Populating DB done'
 echo 'Creating API file'
