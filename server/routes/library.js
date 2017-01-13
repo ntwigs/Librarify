@@ -63,4 +63,19 @@ router.get('/:id', (req, res) => {
     .catch(err => console.log(err))
 })
 
+router.get('/update/:id/:title/:author', (req, res) => {
+  const bookId = req.params.id
+  const title = req.params.title
+  const author = req.params.author
+  const dal = new DAL()
+  let connection
+
+  dal.connect()
+    .then(db => connection = db)
+    .then(() => dal.updateBook(connection, bookId, author, title))
+    .then(() => res.send(true))
+    .then(() => dal.close(connection))
+    .catch(err => console.log(err))
+})
+
 export default router

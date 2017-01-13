@@ -66,20 +66,30 @@ export default class DAL {
     })
   }
 
+  updateBook(db, id, author, title) {
+    return new Promise((res, rej) => {
+      const objectId = new mongodb.ObjectID(id)
+      const collection = db.collection('Books')
+
+      collection.updateOne(
+        {_id: objectId},
+        { $set: { 'author': author, 'title': title}}
+      )
+        .then(result => res(result))
+        .catch(err => rej(err))                   
+    })
+  }
+
   bookSearch(db, string) {
     return new Promise((res, rej) => {
       const collection = db.collection('Books')
-
       collection.find({'title': {$regex: string}})
         .then(result => res(result))
         .catch(err => rej(err))
-
     })
-    
   }
 
   close(db) {
     db.close()
   }
-
 }
