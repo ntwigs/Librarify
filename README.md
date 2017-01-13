@@ -2,15 +2,14 @@
 The internet needs more '-ifys'.
 
 ## How to get this show on the road?
-* Install Node (sudo apt-get install nodejs)
-* Install sqlite3 (sudo apt-get install sqlite3)
-* Run the first shellscript - start.sh (./start.sh)
-* In order to populate the db with some already existing books, run the second shellscript - populate.sh (./populate.sh) 
+* Install Node (sudo apt-get install nodejs).
+* Install mongoDB (sudo apt-get install mongodb).
+* Run the first shellscript - start.sh (./start.sh) - will install dependencies, create missing files, and populate the database. 
 
 ## .. and how do I start this?
 * Open two terminal windows or tabs
-* Go into the server folder - run 'npm install'
-* Go into the client folder - run 'npm install'
+* Go into the server folder - run 'npm start'
+* Go into the client folder - run 'npm start'
 
 #### Everything is now up and running! (*Almost*) - If you only want the basic - less fun condition - then you can stop  right now.
 
