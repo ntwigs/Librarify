@@ -17,8 +17,8 @@ export default class Save extends Component {
     fetch(`http://localhost:8000/create/${changes.title}/${changes.author}`)
         .then(res => res.json())
         .then(json => {
-          this.props.idChange(json.book_id)
-          this.props.changeCover(json.book_cover)
+          this.props.idChange(json._id)
+          this.props.changeCover(json.image.thumbnail.url)
         })
         .then(() => this.props.save())
         .then(() => this.props.edit())

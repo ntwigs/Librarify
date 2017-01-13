@@ -30,12 +30,11 @@ export default class Library extends Component {
 
   createBook(index, search = false) {
     let book = search ? this.state.searchBooks[index] : this.state.books[index]
-
-    return <Book key={book.book_id}
-                 cover={book.book_cover}
-                 title={book.book_title} 
-                 author={book.author_name} 
-                 id={book.book_id} 
+    return <Book key={book._id}
+                 cover={book.image.thumbnail.url}
+                 title={book.title} 
+                 author={book.author} 
+                 id={book._id} 
                  remove={this.removeBookFromArray}
                  new={false} 
     />
@@ -57,10 +56,10 @@ export default class Library extends Component {
     let filtered
 
     if (!this.state.searchMode) {
-      filtered = this.state.books.filter((component) => component.book_id !== id)
+      filtered = this.state.books.filter((component) => component._id !== id)
       this.setState({books: filtered})
     } else {
-      filtered = this.state.searchBooks.filter((component) => component.book_id !== id)
+      filtered = this.state.searchBooks.filter((component) => component._id !== id)
       this.setState({searchBooks: filtered})
     }
    
@@ -80,10 +79,10 @@ export default class Library extends Component {
 
   addToBooksArray = (title, author, cover, id) => {
     const book = {
-      author_name: author,
-      book_cover: cover,
-      book_id: id,
-      book_title: title
+      author: author,
+      image: {thumbnail: {url: cover}},
+      _id: id,
+      title: title
     }
 
     this.setState({
@@ -103,10 +102,10 @@ export default class Library extends Component {
 
     let arr = []
     for (let i = 0; i < id.length; i++) {
-      arr.push(id[i].book_id)
+      arr.push(id[i]._id)
     }
 
-    let searchedBooks = books.filter((booksValue) => arr.indexOf(booksValue.book_id) !== -1)
+    let searchedBooks = books.filter((booksValue) => arr.indexOf(booksValue._id) !== -1)
 
     if (this.state.books.length === searchedBooks.length) {
       searchMode = false
