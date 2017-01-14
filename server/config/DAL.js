@@ -45,13 +45,9 @@ export default class DAL {
         'author': author,
         'image': image
       }
-      collection.insert(book, (err, result) => {
-        if (err) {
-          rej(err)
-        }
-        res(result)
-      })
-
+      collection.insert(book)
+        .then(result => res(result))
+        .catch(err => rej(err))
     })
   }
 
@@ -83,7 +79,11 @@ export default class DAL {
   bookSearch(db, string) {
     return new Promise((res, rej) => {
       const collection = db.collection('Books')
-      collection.find({$or: [{'title': {$regex: string}}, {'author': {$regex: string}}]}).toArray()
+      collection.find(
+        {$or: [
+          {'title': {$regex: string}},
+          {'author': {$regex: string}}
+        ]}).toArray()
         .then(result => res(result))
         .catch(err => rej(err))
     })
